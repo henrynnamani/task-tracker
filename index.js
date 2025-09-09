@@ -4,17 +4,17 @@ const fs = require('fs')
 // Capture the arguments passed into the CLI
 const args = process.argv.slice(2);
 
-if(args.includes('--add') || args.includes('-a')) {
-    const index = args.indexOf('--add') !== -1 ? args.indexOf('--add') + 1 : args.indexOf('-a') + 1;
+if(args.includes('add') || args.includes('-a')) {
+    const index = args.indexOf('add') !== -1 ? args.indexOf('add') + 1 : args.indexOf('-a') + 1;
 
     const description = args[index]
 
     fs.readFile('task.json', 'utf8', (err, data) => {
         if (err) {
-          console.error('Error reading file:', err);
-          return;
+            console.error('Error reading file:', err);
+            return;
         }
-
+        
         const currentTasks = JSON.parse(data);
 
         const task = {
@@ -38,12 +38,12 @@ if(args.includes('--add') || args.includes('-a')) {
       });
       });
 
-      process.exit()
+    //   process.exit()
 }
 
-if(args.includes('--update') || args.includes('-u')) {
-    const index = args.indexOf('--update') !== -1 ? args.indexOf('--update') + 1 : args.indexOf('-u') + 1;
-    const description = args.indexOf('--update') !== -1 ? args.indexOf('--update') + 2 : args.indexOf('-u') + 2;
+if(args.includes('update') || args.includes('-u')) {
+    const index = args.indexOf('update') !== -1 ? args.indexOf('update') + 1 : args.indexOf('-u') + 1;
+    const description = args.indexOf('update') !== -1 ? args.indexOf('update') + 2 : args.indexOf('-u') + 2;
 
     fs.readFile('task.json', 'utf-8', (err, data) => {
         if(err) {
@@ -77,8 +77,8 @@ if(args.includes('--update') || args.includes('-u')) {
     })
 }
 
-if(args.includes('--mark-in-progress')) {
-    const index = args.indexOf('--mark-in-progress') !== -1 && args.indexOf('--mark-in-progress') + 1;
+if(args.includes('mark-in-progress')) {
+    const index = args.indexOf('mark-in-progress') !== -1 && args.indexOf('mark-in-progress') + 1;
 
     fs.readFile('task.json', 'utf-8', (err, data) => {
         if(err) {
@@ -111,8 +111,8 @@ if(args.includes('--mark-in-progress')) {
     })
 }
 
-if(args.includes('--mark-done')) {
-    const index = args.indexOf('--mark-done') !== -1 && args.indexOf('--mark-done') + 1;
+if(args.includes('mark-done')) {
+    const index = args.indexOf('mark-done') !== -1 && args.indexOf('mark-done') + 1;
 
     fs.readFile('task.json', 'utf-8', (err, data) => {
         if(err) {
@@ -145,8 +145,8 @@ if(args.includes('--mark-done')) {
     })
 }
 
-if(args.includes('--delete') || args.includes('-d')) {
-    const index = args.indexOf('--delete') !== -1 ? args.indexOf('--delete') + 1 : args.indexOf('-d') + 1;
+if(args.includes('delete') || args.includes('-d')) {
+    const index = args.indexOf('delete') !== -1 ? args.indexOf('delete') + 1 : args.indexOf('-d') + 1;
 
     fs.readFile('task.json', 'utf-8', (err, data) => {
         if(err) {
@@ -169,32 +169,29 @@ if(args.includes('--delete') || args.includes('-d')) {
     })
 }
 
-if(args.includes('--list') || args.includes('-d')) {
-    const index = args.indexOf('--list') !== -1 ? args.indexOf('--list') + 1 : args.indexOf('-d') + 1;
+if(args.includes('list') || args.includes('-d')) {
+    const status = args.indexOf('list') !== -1 ? args.indexOf('list') + 1 : args.indexOf('-l') + 1;
 
     fs.readFile('task.json', 'utf-8', (err, data) => {
         if(err) {
             console.log('Error reading file')
         }
 
-        const parseData = JSON.parse(data)
+        let tasks = JSON.parse(data)
 
-        const tasks = parseData.filter((task) => String(task.id) !== args[index])
+        if(args[status]) {
+            tasks = tasks.filter((task) => task.status === args[status])
 
-        const jsonString = JSON.stringify(tasks, null, 2)
+        }
 
-        fs.writeFile('task.json', jsonString, (err) => {
-            if(err) {
-                console.log('Error writing to file')
-            }
-        }) 
-
-        console.log('Data successfully deleted ❤️‍🔥')
+        for (let task of tasks) {
+            console.log(`${task.id}: ${task.description}(${task.status})`)
+        }
     })
 }
 
 // Display the CLI version
 if (args.includes('--version') || args.includes('-v')) {
   console.log('Tarc Version 1.0.0 \nBuilt in recovery of heartbreak 💔.');
-  process.exit();
+//   process.exit();
 }

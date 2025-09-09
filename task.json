@@ -5,19 +5,5 @@
     "status": "in-progress",
     "createdAt": "2384203492",
     "updatedAt": "234820349823"
-  },
-  {
-    "id": 2,
-    "description": "Teach Intermediate Class",
-    "status": "in-progress",
-    "createdAt": "2025-09-09T10:59:57.340Z",
-    "updatedAt": "2025-09-09T10:59:57.341Z"
-  },
-  {
-    "id": 4,
-    "description": "Cook Afang  soup",
-    "status": "done",
-    "createdAt": "2025-09-09T11:00:32.793Z",
-    "updatedAt": "2025-09-09T11:46:28.062Z"
   }
 ]
